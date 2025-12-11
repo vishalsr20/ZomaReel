@@ -3,6 +3,19 @@ const foodpartner = require('../model/foodpartner.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const foodpartnerModel = require('../model/foodpartner.model')
+
+const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+function cookieOptions() {
+  return {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    path: '/',
+    maxAge: COOKIE_MAX_AGE
+    // domain: '.onrender.com' // only add if you need cross-subdomain sharing
+  };
+}
 module.exports.registerUser = async (req, res) => {
     try{
         const {fullName , email, password} = req.body;
@@ -23,7 +36,7 @@ module.exports.registerUser = async (req, res) => {
             id:user._id
         },process.env.JWT_SECRET)
 
-        res.cookie("token",token)
+        res.cookie("token",token , cookieOptions())
 
         await user.save();
 
@@ -69,7 +82,7 @@ module.exports.loginUser = async (req, res) => {
             role:'user'
         },process.env.JWT_SECRET)
 
-        res.cookie("token",token)
+        res.cookie("token",token, cookieOptions())
 
         res.status(200).json({
             message:"User login Successfully",
@@ -91,7 +104,7 @@ module.exports.loginUser = async (req, res) => {
 
 module.exports.logoutUser = async (req, res) => {
     try{
-        res.clearCookie("token")
+        res.clearCookie("token",cookieOptions())
         res.status(200).json({
             message:"User logout successfully"
         })
@@ -129,7 +142,7 @@ module.exports.registeredFoodPartner = async (req, res) => {
             id:user._id
         },process.env.JWT_SECRET)
 
-        res.cookie("token",token)
+        res.cookie("token",token,cookieOptions())
 
         await user.save();
 
@@ -175,10 +188,10 @@ module.exports.foodpartnerLogin = async (req, res) => {
 
         const token = jwt.sign({
             id:user._id,
-            role:"food"
+            
         },process.env.JWT_SECRET)
 
-        res.cookie("token",token)
+        res.cookie("token",token,cookieOptions())
 
         res.status(200).json({
             message:"foodpartner login Successfully",
@@ -203,7 +216,7 @@ module.exports.foodpartnerLogin = async (req, res) => {
 
 module.exports.foodpartnerLogout = async (req, res) => {
     try{
-        res.clearCookie("token")
+        res.clearCookie("token",cookieOptions())
         res.status(200).json({
             message:" foodpartner logout successfully"
         })
@@ -216,7 +229,7 @@ module.exports.foodpartnerLogout = async (req, res) => {
 }
 
 module.exports.checkAuthController = async (req , res) => {
-    const token = req.cookies.token
+    const token = req.cookies?.token
     if(!token){
         return res.status(401).json({
             authenticated: false
@@ -275,6 +288,7 @@ module.exports.profileUser = async (req, res) => {
     }
 
     const userId = decoded.id;
+
 
     // Fetch the user
     const user = await userModel.findById(userId);
