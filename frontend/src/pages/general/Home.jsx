@@ -91,17 +91,6 @@ const Home =  () => {
         }
     }
 
-    async function fetchComment(item){
-      if (!isAuthenticated) {
-            navigate("/user/login");
-            return;
-        }
-
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/food/comment`, { itemId: item._id }, { withCredentials: true }) 
-
-
-    }
-
     return (
        
         <ReelFeed
@@ -110,8 +99,6 @@ const Home =  () => {
             onSave={saveVideo}
             emptyMessage="No videos available."
         />
-
-        
         
     )
 }

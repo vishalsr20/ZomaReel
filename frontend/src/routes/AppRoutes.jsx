@@ -13,6 +13,7 @@ import BottomNav from '../components/BottomNav';
 import Saved from '../pages/general/Saved';
 import UserProfile from '../pages/auth/UserProfile';
 import FoodProfile from '../pages/auth/FoodProfile';
+
 const AppRoutes = () => {
   return (
     <>
@@ -29,7 +30,7 @@ const AppRoutes = () => {
             <Route path="/food-partner/:id" element={<Profile />} />
             <Route path="/user/profile" element={ <UserProfile/>} />
             <Route path="/food/profile" element={ <FoodProfile/>} />
-            
+
         </Routes>
         <BottomNav />
     </Router>
