@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://zomareel-com.onrender.com",
     credentials: true
 }))
 
