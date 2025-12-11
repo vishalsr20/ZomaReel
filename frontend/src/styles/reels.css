@@ -1,0 +1,323 @@
+@import './theme.css';
+
+/* Page container ensures full viewport and background */
+.reels-page {
+  height: 100dvh;
+  background: #000;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animated starry background */
+.reels-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(3px 3px at 20% 30%, #fff, transparent),
+    radial-gradient(2px 2px at 60% 70%, #4fc3f7, transparent),
+    radial-gradient(2px 2px at 50% 50%, #f06292, transparent),
+    radial-gradient(1px 1px at 80% 10%, #fff, transparent),
+    radial-gradient(3px 3px at 90% 60%, #ba68c8, transparent),
+    radial-gradient(2px 2px at 33% 80%, #ffd54f, transparent),
+    radial-gradient(1px 1px at 15% 95%, #4db6ac, transparent),
+    radial-gradient(2px 2px at 45% 15%, #ff8a65, transparent),
+    radial-gradient(1px 1px at 75% 85%, #aed581, transparent),
+    radial-gradient(3px 3px at 25% 65%, #64b5f6, transparent);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: twinkle 6s ease-in-out infinite;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Additional animated particles */
+.reels-page::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(255, 100, 200, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(100, 200, 255, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(200, 100, 255, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 30% 90%, rgba(255, 200, 100, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(100, 255, 150, 0.12) 0%, transparent 45%);
+  background-size: 200% 200%;
+  animation: float 12s ease-in-out infinite;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.4;
+    background-position: 0% 0%;
+  }
+  50% {
+    opacity: 0.8;
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    background-position: 0% 0%;
+    transform: scale(1) rotate(0deg);
+  }
+  33% {
+    background-position: 50% 100%;
+    transform: scale(1.15) rotate(5deg);
+  }
+  66% {
+    background-position: 100% 50%;
+    transform: scale(0.95) rotate(-5deg);
+  }
+}
+
+/* Vertical feed with snap scrolling */
+.reels-feed {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  position: relative;
+  z-index: 1;
+}
+
+/* Each reel takes full viewport */
+.reel {
+  position: relative;
+  height: 100dvh;
+  width: 100%;
+  scroll-snap-align: start;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Animated border glow on desktop */
+@media (min-width: 768px) {
+  .reel {
+    box-shadow: 
+      0 0 40px rgba(100, 200, 255, 0.4),
+      0 0 80px rgba(255, 100, 200, 0.3),
+      0 0 120px rgba(200, 100, 255, 0.2);
+    animation: borderGlow 4s ease-in-out infinite;
+  }
+
+  @keyframes borderGlow {
+    0%, 100% {
+      box-shadow: 
+        0 0 40px rgba(100, 200, 255, 0.4),
+        0 0 80px rgba(255, 100, 200, 0.3),
+        0 0 120px rgba(200, 100, 255, 0.2);
+    }
+    33% {
+      box-shadow: 
+        0 0 50px rgba(255, 100, 200, 0.5),
+        0 0 90px rgba(200, 100, 255, 0.4),
+        0 0 130px rgba(100, 255, 150, 0.3);
+    }
+    66% {
+      box-shadow: 
+        0 0 45px rgba(200, 100, 255, 0.45),
+        0 0 85px rgba(255, 200, 100, 0.35),
+        0 0 125px rgba(100, 200, 255, 0.25);
+    }
+  }
+}
+
+.reel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: #000;
+}
+
+/* Overlay: content sits on top of video */
+.reel-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+/* Subtle gradient for text readability */
+.reel-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(0,0,0,0.25) 0%,
+    rgba(0,0,0,0.05) 30%,
+    rgba(0,0,0,0.35) 65%,
+    rgba(0,0,0,0.65) 100%
+  );
+}
+
+.reel-content {
+  position: relative;
+  width: 100%;
+  padding: var(--space-6);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0) + 72px);
+  display: flex;
+  flex-direction: column;
+  padding-right: 4.5rem;
+  gap: var(--space-4);
+  pointer-events: auto;
+}
+
+/* Truncated to two lines */
+.reel-description {
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  font-size: 1rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 90ch;
+}
+
+.reel-btn {
+  align-self: flex-start;
+  background: var(--color-accent);
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
+}
+
+.reel-btn:hover { background: var(--color-accent-hover); }
+.reel-btn:active { transform: translateY(1px); }
+.reel-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* Right-side vertical actions */
+.reel-actions {
+  position: absolute;
+  right: 10px;
+  bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  pointer-events: auto;
+}
+
+.reel-action {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, #000 35%, transparent);
+  backdrop-filter: blur(2px);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.15);
+  box-shadow: var(--shadow-md);
+}
+
+.reel-action:active { transform: translateY(1px); }
+
+.reel-action__count {
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+}
+
+.reel-action-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+}
+
+.empty-state {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+
+/* Desktop: Instagram-style centered mobile format */
+@media (min-width: 768px) {
+  .reels-page {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Show background animations only on desktop */
+  .reels-page::before,
+  .reels-page::after {
+    opacity: 0.8;
+  }
+
+  .reels-feed {
+    max-width: 470px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .reel {
+    max-width: 470px;
+    margin: 0 auto;
+  }
+
+  /* Keep video in mobile/portrait aspect ratio */
+  .reel-video {
+    max-width: 470px;
+    margin: 0 auto;
+  }
+
+  .reel-content {
+    padding: 36px;
+    padding-right: 5rem;
+  }
+
+  .reel-description {
+    font-size: 1.05rem;
+    max-width: 70ch;
+  }
+
+  .reel-actions {
+    right: 16px;
+  }
+}
+
+/* Large Desktop: slightly bigger container */
+@media (min-width: 1200px) {
+  .reels-feed {
+    max-width: 500px;
+  }
+
+  .reel {
+    max-width: 500px;
+  }
+
+  .reel-video {
+    max-width: 500px;
+  }
+}
+
+/* Hide scrollbars */
+.reels-feed::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
