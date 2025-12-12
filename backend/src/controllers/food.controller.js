@@ -102,6 +102,10 @@ module.exports.likeFood = async (req, res) => {
                 $inc:{likeCount:-1}
             })
 
+            await userModel.findByIdAndUpdate(user._id,{
+                $inc:{likeCount:-1}
+            })
+
             return res.status(200).json({
                 message:"Video unlike successfully"
             })
@@ -115,6 +119,9 @@ module.exports.likeFood = async (req, res) => {
         await foodModel.findByIdAndUpdate(foodId,{
             $inc:{likeCount:1}
         })
+        await userModel.findByIdAndUpdate(user._id,{
+                $inc:{likeCount:1}
+            })
 
         res.status(200).json({
             message:"Video like successfully",
@@ -147,6 +154,9 @@ module.exports.saveFood = async (req, res) => {
         await foodModel.findByIdAndUpdate(foodId,{
             $inc : {savesCount:-1}
         }) 
+        await userModel.findByIdAndUpdate(user._id,{
+            $inc:{saveCount:-1}
+        })
 
         return res.status(200).json({
             message: "Food unsaved successfully"
@@ -160,6 +170,9 @@ module.exports.saveFood = async (req, res) => {
     await foodModel.findByIdAndUpdate(foodId,{
             $inc : {savesCount:1}
         }) 
+    await userModel.findByIdAndUpdate(user._id,{
+            $inc:{saveCount:1}
+        })    
 
      res.status(201).json({
         message: "Food saved successfully",
@@ -187,6 +200,8 @@ module.exports.getSavedFood =async  (req, res) => {
 module.exports.comments = async (req , res) => {
     const {foodId, comments} = req.body;
     const userId = req.user;  
+    console.log("userId",userId)
+    console.log("User_id",userId._id)
 
     const newComment = await commentModel.create({
         userId,
@@ -195,10 +210,16 @@ module.exports.comments = async (req , res) => {
     })
 
    
-
+  
     await foodModel.findByIdAndUpdate(foodId,{
         $push:{comments:newComment._id}
     })
+
+    await userModel.findByIdAndUpdate(userId._id,{
+        $inc:{commentCount:1}
+    })
+
+    
 
     
 
@@ -226,3 +247,42 @@ module.exports.getComments = async (req , res) => {
         comments
     })
 }
+
+
+module.exports.profileFood = async (req, res) => {
+
+  try {
+    const partner = req.foodPartner
+    console.log("Partner",partner)
+
+    if (!partner) {
+      return res.status(401).json({
+        message: "Unauthorized - no token",
+      });
+    }
+    // Fetch the user
+    const foodPartner = await foodpartnerModel.findById(partner._id);
+    if (!foodPartner) {
+      return res.status(401).json({
+        message: "Unauthorized - user not found",
+      });
+    }
+
+    const foodItem = await fooditemModel.find({foodPartner:partner._id});
+
+    // Success
+    return res.status(200).json({
+      message: "User profile successfully",
+      user:{
+        partner,
+        foodItem
+      }
+    });
+
+  } catch (error) {
+    console.log("Error in profileUser controller:", error);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};

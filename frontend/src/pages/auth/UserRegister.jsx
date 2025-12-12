@@ -22,6 +22,7 @@ const UserRegister = () => {
             withCredentials:true,
         })
         if(response){
+            navigate('/')
             console.log(response.data)
             
         }else{

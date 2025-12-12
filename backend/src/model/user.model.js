@@ -13,6 +13,17 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         
+    },likeCount:{
+        type:Number,
+        default:0
+    },
+    saveCount:{
+        type:Number,
+        default:0
+    },
+    commentCount:{
+        type:Number,
+        default:0
     }
 
 },{

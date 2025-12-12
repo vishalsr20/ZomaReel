@@ -301,11 +301,7 @@ module.exports.profileUser = async (req, res) => {
     // Success
     return res.status(200).json({
       message: "User profile successfully",
-      user: {
-        id: user._id,
-        email: user.email,
-        fullName: user.fullName,
-      },
+      user
     });
 
   } catch (error) {

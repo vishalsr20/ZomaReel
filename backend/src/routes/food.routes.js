@@ -45,4 +45,9 @@ router.get('/comment',
     foodController.getComments
 )
 
+router.get('/profile',
+    authMiddleware.authFoodPartnerMiddleware,
+    foodController.profileFood
+)
+
 module.exports = router
