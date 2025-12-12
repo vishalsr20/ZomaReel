@@ -1,7 +1,8 @@
 const express = require('express')
 const foodPartnerModel = require('../model/foodpartner.model')
 const foodModel = require('../model/fooditem.model')
-
+const fooditemModel = require('../model/fooditem.model')
+const jwt = require('jsonwebtoken')
 module.exports.getFoodItemsByPartner = async  (req , res)=> {
     const foodPartnerId = req.params.id
     // console.log("ID : ",foodPartnerId)
@@ -30,3 +31,5 @@ module.exports.getFoodItemsByPartner = async  (req , res)=> {
     })
    }
 }
+
+

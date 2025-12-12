@@ -1,0 +1,3 @@
+.env
+node_modules
+git push -u origin main

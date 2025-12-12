@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 const Home =  () => {
     const navigate = useNavigate()
     const [ videos, setVideos ] = useState([])
-      const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [authLoading, setAuthLoading] = useState(true);
 
-   
+
     // Autoplay beh uavior is handled inside ReelFeed
     
     useEffect(() => {
