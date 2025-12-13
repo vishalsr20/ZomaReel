@@ -7,7 +7,7 @@ router.post('/user/register',authController.registerUser )
 router.post('/user/login', authController.loginUser)
 router.get('/user/logout', authController.logoutUser)
 router.get('/user/profile', authController.profileUser)
-
+router.get('/user/mylike',authMiddleware.authUserMiddleware,authController.myLikedVideo )
 
 // FOOD PARTNER API
 router.post('/food-partner/register',authController.registeredFoodPartner)

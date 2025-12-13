@@ -3,7 +3,7 @@ const foodpartner = require('../model/foodpartner.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const foodpartnerModel = require('../model/foodpartner.model')
-
+const likedModel = require('../model/likes.models')
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 function cookieOptions() {
@@ -311,6 +311,22 @@ module.exports.profileUser = async (req, res) => {
     });
   }
 };
+
+module.exports.myLikedVideo = async (req , res) =>{
+    const user = req.user;
+    console.log("User",user)
+    if(!user){
+        return res.status(401).json({
+            message:"Unauthorized"
+        })
+    }
+
+    const likedVideos = await likedModel.find({user:user._id}).populate('food')
+    return res.status(201).json({
+        likedVideos,
+        message:"All My Liked Videos"
+    })
+}
 
 
 
