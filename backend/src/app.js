@@ -13,10 +13,10 @@ const foodPartnerRoutes = require('../src/routes/food-partner.routes');
 const app = express();
 
 
-// app.set('trust proxy', 1);
+app.set('trust proxy', 1);
 
 
-// app.use(helmet());
+app.use(helmet());
 
 
 app.use(express.json());
