@@ -3,24 +3,26 @@ import axios from 'axios';
 import '../../styles/reels.css'
 import ReelFeed from '../../components/ReelFeed'
 import { useNavigate } from 'react-router-dom';
-
+import {useAuth} from '../../context/AuthContext'
+import {toast} from 'react-toastify'
 const Home =  () => {
     const navigate = useNavigate()
     const [ videos, setVideos ] = useState([])
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [authLoading, setAuthLoading] = useState(true);
-    const [videosLoading, setVideosLoading] = useState(true);
-
-
-    // Autoplay behavior is handled inside ReelFeed
     
+    const [videosLoading, setVideosLoading] = useState(true);
+    const { isAuthenticated, role, loading } = useAuth()
+    // console.log("Role ",role)
+    // console.log("Role ",isAuthenticated)
+
+    
+
     useEffect(() => {
         setVideosLoading(true);
         
         axios.get(`${import.meta.env.VITE_API_URL}/api/food/get-Items`, { withCredentials: true })
             .then(response => {
 
-                console.log(response.data);
+                // console.log(response.data);
 
                 setVideos(response.data.foodItems)
             })
@@ -31,49 +33,28 @@ const Home =  () => {
     }, [])
 
 
-      // Check if user is logged in (user token)
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/auth/user/check`,
-          { withCredentials: true }
-        );
-
-        console.log("auth check:", response.data);
-
-        setIsAuthenticated(response.data.authenticated || false);
-      } catch (error) {
-        console.error(
-          "auth check error",
-          error.response?.status,
-          error.response?.data || error.message
-        );
-        setIsAuthenticated(false);
-      } finally {
-        setAuthLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
+      
+ 
 
     // Using local refs within ReelFeed; keeping map here for dependency parity if needed
 
     async function likeVideo(item) {
 
-         if (!isAuthenticated) {
-            navigate("/user/login");
+         if(role != 'user' ){
+            navigate('/user/login')
+            toast.error("Login as a User ")
             return;
-        }
+         }
 
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/food/like`, { foodId: item._id }, {withCredentials: true})
 
         if(response.data.like){
-            console.log("Video liked");
+            // console.log("Video liked");
+            toast.success("Video Liked")
             setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, likeCount: v.likeCount + 1 } : v))
         }else{
-            console.log("Video unliked");
+            // console.log("Video unliked");
+            toast.success("Video Unliked")
             setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, likeCount: v.likeCount - 1 } : v))
         }
         
@@ -81,15 +62,18 @@ const Home =  () => {
 
     async function saveVideo(item) {
 
-         if (!isAuthenticated) {
-            navigate("/user/login");
+         if(role != 'user'){
+            navigate('/user/login')
+            toast.error("Login as a User ")
             return;
-        }
+         }
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/food/save`, { foodId: item._id }, { withCredentials: true })
-        console.log("Response ",response)
+        // console.log("Response ",response)
         if(response.data.save){
+            toast.success("Video Saved ")
             setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, savesCount: v.savesCount + 1 } : v))
         }else{
+            toast.success("Video Unsaved ")
             setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, savesCount: v.savesCount - 1 } : v))
         }
     }

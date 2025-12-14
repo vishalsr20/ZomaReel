@@ -14,24 +14,76 @@ import Saved from '../pages/general/Saved';
 import UserProfile from '../pages/auth/UserProfile';
 import FoodProfile from '../pages/auth/FoodProfile';
 import LikedVideo from '../pages/general/LikedVideo';
+import ProtectedRoute from './ProtectedRoute';
 
 const AppRoutes = () => {
   return (
     <>
     <Router>
         <Routes>
-          <Route path="/register" element={<ChooseRegister/>} />
+
+            {/* PUBLIC ROUTES  */}
+            <Route path="/register" element={<ChooseRegister/>} />
             <Route path='/user/register' element={<UserRegister/>}  />
             <Route path='/user/login' element={<UserLogin/>} />
             <Route path='/food-partner/register' element={ <FoodPartnerRegister/> } />
             <Route path='/food-partner/login'  element={<FoodPartnerLogin/> } />
             <Route path='/'  element={ <><Home/> <BottomNav/> </>} />
-            <Route path="/create-food" element={<CreateFood />} />
-            <Route path="/saved" element={<><Saved /><BottomNav /></>} />
             <Route path="/food-partner/:id" element={<Profile />} />
-            <Route path="/user/profile" element={ <UserProfile/>} />
-            <Route path="/food/profile" element={ <FoodProfile/>} />
-            <Route path="/my-liked-video" element={ <LikedVideo/>} />
+
+          {/* USER PROTECTED ROUTES */}
+
+          <Route
+           path="/saved"
+          element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <>
+              <Saved />
+              <BottomNav />
+              </>
+            </ProtectedRoute>
+          } />
+
+          <Route 
+          path="/user/profile" 
+          element={ 
+          <ProtectedRoute  allowedRoles={['user']} >
+            <UserProfile/>
+          </ProtectedRoute>
+          
+          } />
+
+          <Route 
+          path="/user/profile" 
+          element={ 
+          <ProtectedRoute allowedRoles={['user']}>
+            <UserProfile/>
+          </ProtectedRoute>
+          }/>
+
+          <Route 
+          path="/my-liked-video" 
+          element={
+            <ProtectedRoute allowedRoles={['user']}>
+            <LikedVideo/>
+            </ProtectedRoute>
+            } />
+
+            {/* Food Partner Protected Routes */}
+            <Route path="/create-food" 
+            element={
+            <ProtectedRoute allowedRoles={['food']}>
+            <CreateFood />
+            </ProtectedRoute>
+            } /> 
+                       
+            <Route path="/food/profile" 
+            element={
+              <ProtectedRoute>
+              <FoodProfile/>
+              </ProtectedRoute>
+              } />
+            
 
         </Routes>
         <BottomNav />

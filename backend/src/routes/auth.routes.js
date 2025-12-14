@@ -15,7 +15,7 @@ router.post('/food-partner/login',authController.foodpartnerLogin)
 router.get('/food-partner/profileUser',authController.foodpartnerLogout)
 
 router.get('/user/check',
-    authMiddleware.authUserMiddleware,
+    
     authController.checkAuthController)
 
 module.exports = router;

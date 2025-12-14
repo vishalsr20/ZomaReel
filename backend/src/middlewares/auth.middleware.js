@@ -64,3 +64,34 @@ module.exports.authFoodPartnerMiddleware = async (req, res, next) => {
     return res.status(401).json({ message: "Unauthorized" });
   }
 };
+
+
+// module.exports.requireAuth = (roles = []) => async (req, res, next) => {
+//   try {
+//     const token = getToken(req);
+//     if (!token) {
+//       return res.status(401).json({ message: 'Please login first' });
+//     }
+
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+//     // Role check
+//     if (roles.length && !roles.includes(decoded.role)) {
+//       return res.status(403).json({ message: 'Forbidden' });
+//     }
+
+//     req.auth = decoded; // { id, role }
+
+//     if (decoded.role === 'user') {
+//       req.user = await userModel.findById(decoded.id);
+//     } 
+//     else if (decoded.role === 'food-partner') {
+//       req.foodPartner = await foodPartnerModel.findById(decoded.id);
+//     }
+
+//     next();
+//   } catch (err) {
+//     return res.status(401).json({ message: 'Unauthorized' });
+//   }
+// };
+

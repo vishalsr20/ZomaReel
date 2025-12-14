@@ -33,7 +33,8 @@ module.exports.registerUser = async (req, res) => {
         })
 
         const token = jwt.sign({
-            id:user._id
+            id:user._id,
+            role:"user"
         },process.env.JWT_SECRET)
 
         res.cookie("token",token , cookieOptions())
@@ -45,7 +46,8 @@ module.exports.registerUser = async (req, res) => {
             user:{
                 id:user._id,
                 email:user.email,
-                fullName:user.fullName
+                fullName:user.fullName,
+                 role:'user'
             }
         })
 
@@ -89,7 +91,8 @@ module.exports.loginUser = async (req, res) => {
             user:{
                 id:user._id,
                 email:user.email,
-                fullName:user.fullName
+                fullName:user.fullName,
+                 role:'user'
             }
         })
 
@@ -139,7 +142,8 @@ module.exports.registeredFoodPartner = async (req, res) => {
         })
 
         const token = jwt.sign({
-            id:user._id
+            id:user._id,
+            role:'food'
         },process.env.JWT_SECRET)
 
         res.cookie("token",token,cookieOptions())
@@ -154,7 +158,8 @@ module.exports.registeredFoodPartner = async (req, res) => {
                 name:user.name,
                 address:user.address,
                 phone:user.phone,
-                contactName:user.contactName
+                contactName:user.contactName,
+                 role:'food'
             }
         })
 
@@ -188,7 +193,7 @@ module.exports.foodpartnerLogin = async (req, res) => {
 
         const token = jwt.sign({
             id:user._id,
-            
+            role:'food'
         },process.env.JWT_SECRET)
 
         res.cookie("token",token,cookieOptions())
@@ -201,7 +206,8 @@ module.exports.foodpartnerLogin = async (req, res) => {
                 name:user.name,
                 address:user.address,
                 phone:user.phone,
-                contactName:user.contactName
+                contactName:user.contactName,
+                role:'food'
             }
         })
 
@@ -228,42 +234,27 @@ module.exports.foodpartnerLogout = async (req, res) => {
     }
 }
 
-module.exports.checkAuthController = async (req , res) => {
-    const token = req.cookies?.token
-    if(!token){
-        return res.status(401).json({
-            authenticated: false
-        })
-    }
+module.exports.checkAuthController = (req, res) => {
+  const token = req.cookies?.token;
 
-    try{
-        const decoded = jwt.verify(token,process.env.JWT_SECRET)
+  if (!token) {
+    return res.status(401).json({ authenticated: false });
+  }
 
-        let role = null;
-        let entity = await userModel.findById(decoded.id)
-        if(entity){
-            role = 'user'
-        }else{
-            role='foodPartner'
-        }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        if(!role){
-            return res.json({
-                authenticated: false
-            })
-        }
-        return res.json({
-        authenticated: true,
-        role,
-        id: entity._id,
-        });
+    return res.json({
+      authenticated: true,
+      role: decoded.role, // 🔥 FROM TOKEN
+      id: decoded.id,
+    });
 
-    }catch(err){
-        console.error('Error in /api/auth/check', err);
-    return res.json({ authenticated: false });
+  } catch (err) {
+    return res.status(401).json({ authenticated: false });
+  }
+};
 
-    }
-}
 
 
 

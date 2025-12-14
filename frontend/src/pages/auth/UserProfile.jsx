@@ -15,7 +15,7 @@ const UserProfile = () => {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/user/profile`, {
           withCredentials: true
         })
-        console.log("profile",response.data)
+        // console.log("profile",response.data)
         setUser(response.data.user)
       } catch (error) {
         console.error('Failed to fetch profile:', error)
@@ -190,7 +190,7 @@ const UserProfile = () => {
         </div>
 
         {/* Logout Button */}
-        <button className="logout-btn" onClick={handleLogout}>
+        <button className="logout-btn mb-10" onClick={handleLogout}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
             <polyline points="16 17 21 12 16 7" />
