@@ -29,16 +29,7 @@ const BottomNav = () => {
           <span className="bottom-nav__label">Saved</span>
         </NavLink>
 
-      {isAuthenticated && role == 'user' && (
-        <NavLink to="/saved" className={({ isActive }) => `bottom-nav__item ${isActive ? 'is-active' : ''}`}>
-          <span className="bottom-nav__icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/>
-            </svg>
-          </span>
-          <span className="bottom-nav__label">Saved</span>
-        </NavLink>
-      )} 
+      
     {!loading && (
       isAuthenticated ? (
         role === 'user' ? (

@@ -38,8 +38,7 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={['user']}>
               <>
-              <Saved />
-              <BottomNav />
+              <Saved />   
               </>
             </ProtectedRoute>
           } />
