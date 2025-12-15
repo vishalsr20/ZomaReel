@@ -150,6 +150,7 @@ const UserProfile = () => {
           </button>
           </Link>
 
+          <Link to={"/my-liked-video"} >
           <button className="menu-item">
             <div className="menu-item-content">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -161,6 +162,7 @@ const UserProfile = () => {
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
+          </Link>
 
           <button className="menu-item">
             <div className="menu-item-content">
