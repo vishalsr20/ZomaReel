@@ -8,6 +8,7 @@ router.post('/user/login', authController.loginUser)
 router.get('/user/logout', authController.logoutUser)
 router.get('/user/profile', authController.profileUser)
 router.get('/user/mylike',authMiddleware.authUserMiddleware,authController.myLikedVideo )
+router.put('/user/edit', authMiddleware.authUserMiddleware, authController.editUser)
 
 // FOOD PARTNER API
 router.post('/food-partner/register',authController.registeredFoodPartner)

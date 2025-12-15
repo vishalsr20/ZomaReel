@@ -120,6 +120,45 @@ module.exports.logoutUser = async (req, res) => {
 }
 
 
+module.exports.editUser = async (req , res) => {
+    const token = req.cookies.token
+    if(!token){
+        return res.status(401).json({
+            message:"Unauthorized"
+        })
+    }
+    try{
+        const userId =  req.user
+        console.log("UserId",userId)
+        const { fullName , email, password} = req.body;
+        const user = await userModel.findById(userId)
+        if(!user){
+            return res.status(401).json({
+                message:"User doesn't exists"
+            })
+        }
+
+        const hashPassword = await bcrypt.hash(password,10);
+
+
+
+        user.fullName = fullName
+        user.email = email
+        user.password = hashPassword
+        user.save();
+
+        return res.status(200).json({
+            message:"User data updates successfully",
+            user
+        })
+
+    }catch(err){
+        return res.status(500).json({
+            message:"Internal Server Error"
+        })
+    }
+}
+
 /// food partner
 
 module.exports.registeredFoodPartner = async (req, res) => {
