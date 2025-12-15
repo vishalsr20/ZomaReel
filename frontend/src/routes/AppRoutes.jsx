@@ -15,6 +15,7 @@ import UserProfile from '../pages/auth/UserProfile';
 import FoodProfile from '../pages/auth/FoodProfile';
 import LikedVideo from '../pages/general/LikedVideo';
 import ProtectedRoute from './ProtectedRoute';
+import UserEditProfile from '../pages/auth/UserEditProfile';
 
 const AppRoutes = () => {
   return (
@@ -67,6 +68,15 @@ const AppRoutes = () => {
             <LikedVideo/>
             </ProtectedRoute>
             } />
+
+          <Route
+          path='/user/edit'
+          element={
+            <ProtectedRoute allowedRoles={['user']} >
+              <UserEditProfile/>
+            </ProtectedRoute>
+          }
+          />  
 
             {/* Food Partner Protected Routes */}
             <Route path="/create-food" 

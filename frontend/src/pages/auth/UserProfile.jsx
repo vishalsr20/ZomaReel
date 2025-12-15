@@ -116,6 +116,9 @@ const UserProfile = () => {
 
         {/* Actions Section */}
         <div className="profile-actions">
+          <Link to={'/user/edit'}
+          state={{user}}
+          >
           <button className="action-btn action-btn-primary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -123,6 +126,7 @@ const UserProfile = () => {
             </svg>
             Edit Profile
           </button>
+          </Link>
 
           <button className="action-btn action-btn-secondary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
