@@ -1,8 +1,17 @@
 @import './theme.css';
 
+html, body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 .bottom-nav {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
+  position: fixed !important;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 56px;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(20px);
@@ -12,7 +21,7 @@
     0 -4px 20px rgba(0, 0, 0, 0.3),
     0 0 40px rgba(100, 200, 255, 0.1),
     0 0 60px rgba(255, 100, 200, 0.08);
-  z-index: 50;
+  z-index: 9999;
   animation: navGlow 8s ease-in-out infinite;
 }
 
@@ -45,7 +54,7 @@
   margin: 0 auto;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 }
 
 .bottom-nav__item {
@@ -53,9 +62,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 2px;
+  padding-bottom: 6px;
   color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
-  gap: 2px;
+  gap: 4px;
   position: relative;
   transition: all 0.3s ease;
 }
@@ -68,9 +79,10 @@
   transform: translateX(-50%) scaleX(0);
   width: 80%;
   height: 3px;
-  background: linear-gradient(90deg, 
-    rgba(100, 200, 255, 0.8), 
-    rgba(200, 100, 255, 0.8), 
+  background: linear-gradient(
+    90deg,
+    rgba(100, 200, 255, 0.8),
+    rgba(200, 100, 255, 0.8),
     rgba(255, 100, 200, 0.8)
   );
   border-radius: 0 0 3px 3px;
@@ -86,8 +98,20 @@
   transform: translateX(-50%) scaleX(1);
 }
 
-.bottom-nav__item:hover {
-  color: rgba(255, 255, 255, 0.9);
+.bottom-nav__icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transform: translateY(-3px);
+}
+
+.bottom-nav__icon svg {
+  width: 22px;
+  height: 22px;
+  display: block;
 }
 
 .bottom-nav__item.is-active .bottom-nav__icon {
@@ -96,27 +120,19 @@
 
 @keyframes iconPulse {
   0%, 100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 8px rgba(100, 200, 255, 0.6));
+    transform: translateY(-3px) scale(1);
+    filter: drop-shadow(0 0 6px rgba(100, 200, 255, 0.6));
   }
   50% {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 12px rgba(255, 100, 200, 0.8));
+    transform: translateY(-3px) scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(255, 100, 200, 0.8));
   }
-}
-
-.bottom-nav__icon {
-  line-height: 0;
-  transition: all 0.3s ease;
-}
-
-.bottom-nav__item:active .bottom-nav__icon {
-  transform: scale(0.9);
 }
 
 .bottom-nav__label {
   font-size: 12px;
   font-weight: 500;
+  transform: translateY(-1px);
   transition: all 0.3s ease;
 }
 
@@ -125,12 +141,15 @@
   text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
 }
 
-/* Ripple effect on tap */
 .bottom-nav__item::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(100, 200, 255, 0.3) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(100, 200, 255, 0.3) 0%,
+    transparent 70%
+  );
   opacity: 0;
   transform: scale(0);
   transition: all 0.5s ease;
@@ -143,21 +162,19 @@
   transition: all 0s;
 }
 
-/* Safe area for iOS */
-@supports(padding: max(0px)) {
-  .bottom-nav { 
-    padding-bottom: max(env(safe-area-inset-bottom), 0px); 
+@supports (padding: max(0px)) {
+  .bottom-nav {
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
   }
 }
 
-/* Desktop hover effects */
 @media (hover: hover) {
   .bottom-nav__item:hover .bottom-nav__icon {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
     filter: drop-shadow(0 4px 8px rgba(100, 200, 255, 0.4));
   }
-  
+
   .bottom-nav__item:hover .bottom-nav__label {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 }

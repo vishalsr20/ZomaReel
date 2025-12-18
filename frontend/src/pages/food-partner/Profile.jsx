@@ -111,7 +111,7 @@ const Profile = () => {
                                 </div>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid grid-cols-2 gap-3 mb-20">
                                 {videos.map((food) => (
                                     <div
                                         key={food._id}
@@ -163,11 +163,11 @@ const Profile = () => {
                                             </div>
 
                                             {/* Bottom Info */}
-                                            <div className="absolute bottom-0 left-0 right-0 p-3">
+                                            <div className="absolute bottom-0 left-0 right-0 p-3 ">
                                                 <h3 className="text-white font-bold text-sm mb-1 line-clamp-1">
                                                     {food.name}
                                                 </h3>
-                                                <p className="text-white/70 text-xs line-clamp-2">
+                                                <p className="text-white/70 text-xs line-clamp-2 ">
                                                     {food.description}
                                                 </p>
                                             </div>

@@ -49,7 +49,7 @@ const BottomNav = () => {
           </NavLink>
         ) : (
           <>
-            <NavLink
+            {/* <NavLink
               to="/create-food"
               className={({ isActive }) =>
                 `bottom-nav__item ${isActive ? 'is-active' : ''}`
@@ -62,7 +62,7 @@ const BottomNav = () => {
                 </svg>
               </span>
               <span className="bottom-nav__label">Create</span>
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               to="/food/profile"
