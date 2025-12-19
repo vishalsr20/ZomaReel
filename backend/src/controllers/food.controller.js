@@ -286,3 +286,28 @@ module.exports.profileFood = async (req, res) => {
     });
   }
 };
+
+
+module.exports.getAllFoodItems = async (req, res) => {
+    try{    
+        const partnerId = req.foodPartner
+        console.log("Partner Id",partnerId._id)
+        
+        if(!partnerId){
+            return res.status(401).json({
+                message:"Unauthorized"
+            })
+        }
+
+        const foodItems = await foodModel.find({foodPartner:partnerId._id}).populate("foodPartner")
+
+        res.status(200).json({
+            foodItems
+        })
+    }catch(err){
+        return res.status(500).json({
+            message:err.message,
+            status:false
+        })
+    }
+}

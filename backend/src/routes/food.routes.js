@@ -50,4 +50,9 @@ router.get('/profile',
     foodController.profileFood
 )
 
+
+router.get('/foodItem',
+    authMiddleware.authFoodPartnerMiddleware,
+    foodController.getAllFoodItems
+)
 module.exports = router

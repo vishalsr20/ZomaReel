@@ -17,6 +17,7 @@ import UserEditProfile from '../pages/auth/UserEditProfile'
 
 import BottomNav from '../components/BottomNav'
 import ProtectedRoute from './ProtectedRoute'
+import HelpAndSupport from '../pages/general/HelpAndSupport'
 
 const AppRoutes = () => {
   return (
@@ -30,6 +31,7 @@ const AppRoutes = () => {
         <Route path="/user/login" element={<UserLogin />} />
         <Route path="/food-partner/register" element={<FoodPartnerRegister />} />
         <Route path="/food-partner/login" element={<FoodPartnerLogin />} />
+        <Route path='/contactAndSupport' element={<HelpAndSupport/>} />
 
         {/* GENERAL ROUTES */}
         <Route path="/" element={<Home />} />
