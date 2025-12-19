@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import '../../styles/foodProfile.css'
-
+import { Link } from 'react-router-dom'
 export default function FoodPartnerProfile() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -145,18 +145,22 @@ export default function FoodPartnerProfile() {
 
         {/* Menu Section */}
         <div className="profile-menu">
+          <Link to={'/food-items'} >
           <button className="menu-item">
             <div className="menu-item-content">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 2L2 7l10 5 10-5-10-5z" />
                 <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
               </svg>
+              
               <span>My Food Items</span>
+             
             </div>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
+           </Link>
 
           <button className="menu-item">
             <div className="menu-item-content">

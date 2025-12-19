@@ -18,6 +18,7 @@ import UserEditProfile from '../pages/auth/UserEditProfile'
 import BottomNav from '../components/BottomNav'
 import ProtectedRoute from './ProtectedRoute'
 import HelpAndSupport from '../pages/general/HelpAndSupport'
+import ViewFoodItem from '../pages/food-partner/ViewFoodItem'
 
 const AppRoutes = () => {
   return (
@@ -91,6 +92,14 @@ const AppRoutes = () => {
               <FoodProfile />
             </ProtectedRoute>
           }
+        />
+        <Route
+        path='/food-items'
+        element={
+          <ProtectedRoute allowedRoles={['food']} >
+            <ViewFoodItem/>
+          </ProtectedRoute>
+        }
         />
 
       </Routes>
