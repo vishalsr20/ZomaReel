@@ -20,36 +20,54 @@ const BottomNav = () => {
           <span className="bottom-nav__label">Home</span>
         </NavLink>
 
-        <NavLink to="/saved" className={({ isActive }) => `bottom-nav__item ${isActive ? 'is-active' : ''}`}>
+        {/* <NavLink to="/saved" className={({ isActive }) => `bottom-nav__item ${isActive ? 'is-active' : ''}`}>
           <span className="bottom-nav__icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/>
             </svg>
           </span>
           <span className="bottom-nav__label">Saved</span>
-        </NavLink>
+        </NavLink> */}
 
       
     {!loading && (
       isAuthenticated ? (
-        role === 'user' ? (
-          <NavLink
-            to="/user/profile"
-            className={({ isActive }) =>
-              `bottom-nav__item ${isActive ? 'is-active' : ''}`
-            }
-          >
-            <span className="bottom-nav__icon" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="8" r="5" />
-                <path d="M20 21a8 8 0 1 0-16 0" />
-              </svg>
-            </span>
-            <span className="bottom-nav__label">Profile</span>
-          </NavLink>
+       role === 'user' ? (
+  <>
+            {/* Saved ONLY for normal user */}
+            <NavLink
+              to="/saved"
+              className={({ isActive }) =>
+                `bottom-nav__item ${isActive ? 'is-active' : ''}`
+              }
+            >
+              <span className="bottom-nav__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/>
+                </svg>
+              </span>
+              <span className="bottom-nav__label">Saved</span>
+            </NavLink>
+
+            {/* User Profile */}
+            <NavLink
+              to="/user/profile"
+              className={({ isActive }) =>
+                `bottom-nav__item ${isActive ? 'is-active' : ''}`
+              }
+            >
+              <span className="bottom-nav__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="8" r="5" />
+                  <path d="M20 21a8 8 0 1 0-16 0" />
+                </svg>
+              </span>
+              <span className="bottom-nav__label">Profile</span>
+            </NavLink>
+          </>
         ) : (
           <>
-            {/* <NavLink
+            <NavLink
               to="/create-food"
               className={({ isActive }) =>
                 `bottom-nav__item ${isActive ? 'is-active' : ''}`
@@ -62,7 +80,7 @@ const BottomNav = () => {
                 </svg>
               </span>
               <span className="bottom-nav__label">Create</span>
-            </NavLink> */}
+            </NavLink>
 
             <NavLink
               to="/food/profile"
