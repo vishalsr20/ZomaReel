@@ -2,7 +2,7 @@ import React from 'react';
 import '../../styles/auth-shared.css';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 const UserLogin = () => {
   const navigate = useNavigate()
  const handleSubmit = async (e) => {
@@ -55,8 +55,17 @@ const UserLogin = () => {
         </form>
         <div className="auth-alt-action">
           New here? <a href="/user/register">Create account</a>
+          
+        </div>
+        <div className='flex justify-center '>
+          <Link to={'/food-partner/login'} 
+        className='text-white'
+        >
+        <span className='text-white'>Sigin as a</span>  <a className='upparcase'>Food-Partner</a>
+        </Link>
         </div>
       </div>
+      
     </div>
   );
 };
